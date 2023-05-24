@@ -12,5 +12,5 @@ function validarformulario(e){
     const direccion= document.getElementById("direccion").value
     const ciudad= document.getElementById("ciudad").value
 
-    console.log(email,contraseña,productos,cantidad,talla,nombre,apellido,direccio,ciudad)
+    console.log(email,contraseña,productos,cantidad,talla,nombre,apellido,direccion,ciudad)
 }
