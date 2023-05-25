@@ -4,7 +4,7 @@ document.getElementById("btn").addEventListener("click" , validarformulario)
 function validarformulario(e){
     const email= document.getElementById("email").value
     const contraseña= document.getElementById("contraseña").value
-    const productos= document.getElementById("producto").value
+    const productos= document.getElementById("flexCheckDefault").checked
     const cantidad= document.getElementById("cantidad").value
     const talla= document.getElementById("talla").value
     const nombre= document.getElementById("nombre").value
