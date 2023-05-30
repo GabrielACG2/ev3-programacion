@@ -18,16 +18,16 @@
 
 var registrar = ()=>{
     let eemail = document.getElementById("email");
-    let econtraseña = document.getElementById("contraseña");
+    let econtrasena = document.getElementById("contrasena");
     let eproductos = document.getElementById("flexCheckDefault");
-    let ecantidad = document.getElementById("cantida");
+    let ecantidad = document.getElementById("cantidad");
     let etalla = document.getElementById("talla");
     let enombre = document.getElementById("nombre");
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
     let eciudad = document.getElementById("ciudad");
     let email = eemail.value;
-    let contraseña = econtraseña.value;
+    let contrasena = econtrasena.value;
     let productos = eproductos.value;
     let cantidad = ecantidad.value;
     let talla = etalla.value;
@@ -36,7 +36,7 @@ var registrar = ()=>{
     let direccion = edireccion.value;
     let ciudad = eciudad.value;
     console.log(email)
-    console.log(contraseña)
+    console.log(contrasena)
     console.log(productos)
     console.log(cantidad)
     console.log(talla)
@@ -44,9 +44,9 @@ var registrar = ()=>{
     console.log(apellido)
     console.log(direccion)
     console.log(ciudad)
-    let persona ={"email":email,"contraseña":coontraseña,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
-    let listadopersonas=localStorage.getItem("personas");
-    let listadoantiguo= JSON.parse(listadopersonas);
+    let persona ={"email":email,"contraseña":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+    let listado=localStorage.getItem("personas");
+    let listadoantiguo= JSON.parse(listado);
     if(listadoantiguo==null){
         listadonuevo =[persona]
     }else{
@@ -60,3 +60,5 @@ var registrar = ()=>{
 }
 
     document.getElementById("btn").addEventListener("click" , registrar)
+
+
