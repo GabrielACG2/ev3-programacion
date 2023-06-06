@@ -17,6 +17,7 @@
 
 
 var registrar = ()=>{
+    let econtenedorTabla= document.getElementById("contenedorTabla")
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
     let eproductos = document.getElementById("flexCheckDefault");
@@ -50,13 +51,52 @@ var registrar = ()=>{
     if(listadoantiguo==null){
         listadonuevo =[persona]
     }else{
-        listadoantiguo.push(persona)
-        listadonuevo =[...listadoantiguo]
+        //listadoantiguo.push(persona)
+        listadonuevo =[...listadoantiguo,persona]
     }
     console.log(persona)
     console.log(listadoantiguo)
     console.log(listadonuevo)
     localStorage.setItem("personas",JSON.stringify(listadonuevo));
+    
+    render="table"
+    render="<tr>"
+    render+="<th>email</th>"
+    render+="<th>contrasena</th>"
+    render+="<th>productos</th>"
+    render+="<th>cantidad</th>"
+    render+="<th>talla</th>"
+    render+="<th>nombre</th>"
+    render+="<th>apellido</th>"
+    render+="<th>direccion</th>"
+    render+="<th>ciudad</th>"
+    render+="</tr>"
+
+    for (let i = 0; i <listadonuevo.length; i++) {
+        const element = listadonuevo[i];
+        render+="<tr>"
+        render+="<td>"+element.email+"</td>"
+        render+="<td>"+element.contrasena+"</td>"
+        render+="<td>"+element.productos+"</td>"
+        render+="<td>"+element.cantidad+"</td>"
+        render+="<td>"+element.talla+"</td>"
+        render+="<td>"+element.nombre+"</td>"
+        render+="<td>"+element.apellido+"</td>"
+        render+="<td>"+element.direccion+"</td>"
+        render+="<td>"+element.ciudad+"</td>"
+        render+="<td>"
+        render+="<button id= 'btneditar"+i+"'>editar</button>"
+        render+="<button id= 'btneliminar"+i+"'>eliminar</button>"
+        render+="</td>"
+        render+="</tr>"
+    }
+    render+="</table>"
+    econtenedorTabla.innerHTML = render;
+    for (let i = 0; i < listadonuevo.length; i++) {
+        var eBTN = document.getElementById("btneditar"+i);
+        let element= listadonuevo[i]
+        eBTN.addEventListener("click",()=>{alert("hola"+element.email+" "+element.contrasena+" "+element.productos+" "+element.cantidad+" "+element.talla+" "+element.nombre+" "+element.apellido+" "+element.direccion+" "+element.ciudad)})
+    }
 }
 
     document.getElementById("btn").addEventListener("click" , registrar)
