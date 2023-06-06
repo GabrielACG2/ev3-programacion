@@ -59,18 +59,18 @@ var registrar = ()=>{
     console.log(listadonuevo)
     localStorage.setItem("personas",JSON.stringify(listadonuevo));
     
-    render="table"
-    render="<tr>"
-    render+="<th>email</th>"
-    render+="<th>contrasena</th>"
-    render+="<th>productos</th>"
-    render+="<th>cantidad</th>"
-    render+="<th>talla</th>"
-    render+="<th>nombre</th>"
-    render+="<th>apellido</th>"
-    render+="<th>direccion</th>"
-    render+="<th>ciudad</th>"
-    render+="</tr>"
+    render= "<table>"
+    render+= "<tr>"
+    render+= "<th>email</th>"
+    render+= "<th>contrasena</th>"
+    render+= "<th>productos</th>"
+    render+= "<th>cantidad</th>"
+    render+= "<th>talla</th>"
+    render+= "<th>nombre</th>"
+    render+= "<th>apellido</th>"
+    render+= "<th>direccion</th>"
+    render+= "<th>ciudad</th>"
+    render+= "</tr>"
 
     for (let i = 0; i <listadonuevo.length; i++) {
         const element = listadonuevo[i];
