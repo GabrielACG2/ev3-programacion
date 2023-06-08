@@ -14,10 +14,137 @@
 
     //console.log(email,contraseña,productos,cantidad,talla,nombre,apellido,direccion,ciudad)
 //}
+var modificar = (listadonuevo)=>{
+    let eemail = document.getElementById("email");
+    let econtrasena = document.getElementById("contrasena");
+    let eproductos = document.getElementById("flexCheckDefault");
+    let ecantidad = document.getElementById("cantidad");
+    let etalla = document.getElementById("talla");
+    let enombre = document.getElementById("nombre");
+    let eapellido = document.getElementById("apellido");
+    let edireccion = document.getElementById("direccion");
+    let eciudad = document.getElementById("ciudad");
+    let eBtnEditarUp = document.getElementById('btnEditar')
+    let email = eemail.value;
+    let contrasena = econtrasena.value;
+    let productos = eproductos.value;
+    let cantidad = ecantidad.value;
+    let talla = etalla.value;
+    let nombre = enombre.value;
+    let apellido = eapellido.value;
+    let direccion = edireccion.value;
+    let ciudad = eciudad.value;
+    let indice = eBtnEditarUp.value;
+    listadonuevo[indice].email =email;
+    listadonuevo[indice].contrasena =contrasena;
+    listadonuevo[indice].productos =productos;
+    listadonuevo[indice].cantidad =cantidad;
+    listadonuevo[indice].talla =talla;
+    listadonuevo[indice].nombre =nombre;
+    listadonuevo[indice].apellido =apellido;
+    listadonuevo[indice].direccion =direccion;
+    listadonuevo[indice].ciudad =ciudad;
+    localStorage.setItem('personas',JSON.stringify(listadonuevo));
+    cargarTabla(listadonuevo)
 
+}
+var eliminar = (listadonuevo)=>{
+    let eBtnEliminarUp = document.getElementById('btnEliminar');
+    let indice = eBtnEliminarUp.value;
+    console.log(listadonuevo)
+    lista = listadonuevo.filter((p)=>p.id!=indice)
+    console.log(lista)
+    localStorage.setItem('personas',JSON.stringify(lista));
+    cargarTabla(lista)
+}
+var cargarTabla=(listadonuevo)=>{
+    let econtenedorTabla = document.getElementById("contenedorTabla");
+    let eemail = document.getElementById("email");
+    let econtrasena = document.getElementById("contrasena");
+    let eproductos = document.getElementById("flexCheckDefault");
+    let ecantidad = document.getElementById("cantidad");
+    let etalla = document.getElementById("talla");
+    let enombre = document.getElementById("nombre");
+    let eapellido = document.getElementById("apellido");
+    let edireccion = document.getElementById("direccion");
+    let eciudad = document.getElementById("ciudad");
 
+    render= "<table>"
+    render+= "<tr>"
+    render+= "<th>email</th>"
+    render+= "<th>contrasena</th>"
+    render+= "<th>productos</th>"
+    render+= "<th>cantidad</th>"
+    render+= "<th>talla</th>"
+    render+= "<th>nombre</th>"
+    render+= "<th>apellido</th>"
+    render+= "<th>direccion</th>"
+    render+= "<th>ciudad</th>"
+    render+= "<th>accion</th>"
+    render+= "</tr>"
+
+    for (let i = 0; i <listadonuevo.length; i++) {
+        const element = listadonuevo[i];
+        render+="<tr>"
+        render+="<td>"+element.email+"</td>"
+        render+="<td>"+element.contrasena+"</td>"
+        render+="<td>"+element.productos+"</td>"
+        render+="<td>"+element.cantidad+"</td>"
+        render+="<td>"+element.talla+"</td>"
+        render+="<td>"+element.nombre+"</td>"
+        render+="<td>"+element.apellido+"</td>"
+        render+="<td>"+element.direccion+"</td>"
+        render+="<td>"+element.ciudad+"</td>"
+        render+="<td>"
+        render+="<button id= 'btnEditar"+i+"'>editar</button>"
+        render+="<button id= 'btnEliminar"+i+"'>eliminar</button>"
+        render+="</td>"
+        render+="</tr>"
+    }
+    render+="</table>"
+    econtenedorTabla.innerHTML = render;
+    for (let i = 0; i < listadonuevo.length; i++) {
+        var eBTN = document.getElementById("btnEditar"+i);
+        var eBTN2 = document.getElementById("btnEliminar"+i);
+        let element= listadonuevo[i]
+        eBTN.addEventListener("click",()=>{
+            eemail.value=element.email;
+            econtrasena.value=element.contrasena;
+            eproductos.value=element.productos;
+            ecantidad.value=element.cantidad;
+            etalla.value=element.talla;
+            enombre.value=element.nombre;
+            eapellido.value=element.apellido;
+            edireccion.value=element.direccion;
+            eciudad.value=element.ciudad;
+            let sEditar = "<button type='button' id='btnEditar' value='"+i+"'>Editar</button>";
+
+            let contenedorBoton = document.getElementById('contenedorBtnExtra');
+            contenedorBoton.innerHTML = sEditar;
+            let eBtnEditarUp = document.getElementById('btnEditar');
+            eBtnEditarUp.addEventListener('click',()=>modificar(listadonuevo))
+
+        })
+        eBTN2.addEventListener("click",()=>{
+            eemail.value=element.email;
+            econtrasena.value=element.contrasena;
+            eproductos.value=element.productos;
+            ecantidad.value=element.cantidad;
+            etalla.value=element.talla;
+            enombre.value=element.nombre;
+            eapeliido.value=element.apellido;
+            edireccion.value=element.direccion;
+            eciudad.value=element.ciudad;
+            let sEliminar = "<button type='button' id='btnEliminar' value='"+i+"'>Eliminar</button>";
+
+            let contenedorBoton = document.getElementById('contenedorBtnExtra');
+            contenedorBoton.innerHTML = sEliminar;
+            let eBtnEliminarUp = document.getElementById('btnEliminar');
+            eBtnEliminarUp.addEventListener('click',()=>eliminar(listadonuevo))
+        })
+    }
+}
 var registrar = ()=>{
-    let econtenedorTabla= document.getElementById("contenedorTabla")
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
     let eproductos = document.getElementById("flexCheckDefault");
@@ -45,60 +172,79 @@ var registrar = ()=>{
     console.log(apellido)
     console.log(direccion)
     console.log(ciudad)
-    let persona ={"email":email,"contraseña":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
-    let listado=localStorage.getItem("personas");
-    let listadoantiguo= JSON.parse(listado);
-    if(listadoantiguo==null){
-        listadonuevo =[persona]
+    let listadoPersonas = localStorage.getItem("personas");
+    let listadoAntiguo = JSON.parse(listadoPersonas);
+    if(listadoAntiguo==null){
+        let persona = {"id": 0,"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        listadonuevo = [persona]
     }else{
-        //listadoantiguo.push(persona)
-        listadonuevo =[...listadoantiguo,persona]
+        //listadoAntiguo.push(persona)
+        let persona = {"id": listadoAntiguo.length,"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        listadonuevo = [...listadoAntiguo,persona]
     }
-    console.log(persona)
-    console.log(listadoantiguo)
-    console.log(listadonuevo)
+    //console.log(persona)
+    console.log(listadoAntiguo)
+    console.log(listadonuevo);
     localStorage.setItem("personas",JSON.stringify(listadonuevo));
+    //eContenedorTabla.innerHTML = ""+listadoNuevo.length;
+    //tabla
+    cargarTabla(listadonuevo)
+   }
+document.getElementById("btn").addEventListener("click",registrar);
+    //let persona ={"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+    //let listado=localStorage.getItem("pers  onas");
+    //let listadoantiguo= JSON.parse(listado);
+    //if(listadoantiguo==null){
+        //listadonuevo =[persona]
+    //}else{
+        //listadoantiguo.push(persona)
+        //listadonuevo =[...listadoantiguo,persona]
+    //}
+    //console.log(persona)
+    //console.log(listadoantiguo)
+    //console.log(listadonuevo)
+    //localStorage.setItem("personas",JSON.stringify(listadonuevo));
     
-    render= "<table>"
-    render+= "<tr>"
-    render+= "<th>email</th>"
-    render+= "<th>contrasena</th>"
-    render+= "<th>productos</th>"
-    render+= "<th>cantidad</th>"
-    render+= "<th>talla</th>"
-    render+= "<th>nombre</th>"
-    render+= "<th>apellido</th>"
-    render+= "<th>direccion</th>"
-    render+= "<th>ciudad</th>"
-    render+= "</tr>"
+    //render= "<table>"
+    //render+= "<tr>"
+    //render+= "<th>email</th>"
+    //render+= "<th>contrasena</th>"
+    //render+= "<th>productos</th>"
+    //render+= "<th>cantidad</th>"
+    //render+= "<th>talla</th>"
+    //render+= "<th>nombre</th>"
+    //render+= "<th>apellido</th>"
+   // render+= "<th>direccion</th>"
+    //render+= "<th>ciudad</th>"
+    //render+= "</tr>"
 
-    for (let i = 0; i <listadonuevo.length; i++) {
-        const element = listadonuevo[i];
-        render+="<tr>"
-        render+="<td>"+element.email+"</td>"
-        render+="<td>"+element.contrasena+"</td>"
-        render+="<td>"+element.productos+"</td>"
-        render+="<td>"+element.cantidad+"</td>"
-        render+="<td>"+element.talla+"</td>"
-        render+="<td>"+element.nombre+"</td>"
-        render+="<td>"+element.apellido+"</td>"
-        render+="<td>"+element.direccion+"</td>"
-        render+="<td>"+element.ciudad+"</td>"
-        render+="<td>"
-        render+="<button id= 'btneditar"+i+"'>editar</button>"
-        render+="<button id= 'btneliminar"+i+"'>eliminar</button>"
-        render+="</td>"
-        render+="</tr>"
-    }
-    render+="</table>"
-    econtenedorTabla.innerHTML = render;
-    for (let i = 0; i < listadonuevo.length; i++) {
-        var eBTN = document.getElementById("btneditar"+i);
-        let element= listadonuevo[i]
-        eBTN.addEventListener("click",()=>{alert("hola"+element.email+" "+element.contrasena+" "+element.productos+" "+element.cantidad+" "+element.talla+" "+element.nombre+" "+element.apellido+" "+element.direccion+" "+element.ciudad)})
-    }
-}
+    //for (let i = 0; i <listadonuevo.length; i++) {
+        //const element = listadonuevo[i];
+        //render+="<tr>"
+        //render+="<td>"+element.email+"</td>"
+        //render+="<td>"+element.contrasena+"</td>"
+        //render+="<td>"+element.productos+"</td>"
+        //render+="<td>"+element.cantidad+"</td>"
+        //render+="<td>"+element.talla+"</td>"
+        //render+="<td>"+element.nombre+"</td>"
+        //render+="<td>"+element.apellido+"</td>"
+        //render+="<td>"+element.direccion+"</td>"
+        //render+="<td>"+element.ciudad+"</td>"
+        //render+="<td>"
+        //render+="<button id= 'btneditar"+i+"'>editar</button>"
+        //render+="<button id= 'btneliminar"+i+"'>eliminar</button>"
+        //render+="</td>"
+        //render+="</tr>"
+    //}
+    //render+="</table>"
+    //econtenedorTabla.innerHTML = render;
+    //for (let i = 0; i < listadonuevo.length; i++) {
+        //var eBTN = document.getElementById("btneditar"+i);
+        //let element= listadonuevo[i]
+        //eBTN.addEventListener("click",()=>{alert("hola"+element.email+" "+element.contrasena+" "+element.productos+" "+element.cantidad+" "+element.talla+" "+element.nombre+" "+element.apellido+" "+element.direccion+" "+element.ciudad)})
+    //}
+//}
 
-    document.getElementById("btn").addEventListener("click" , registrar)
+   // document.getElementById("btn").addEventListener("click" , registrar)
 
 
