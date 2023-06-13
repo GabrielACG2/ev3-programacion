@@ -1,4 +1,3 @@
-
 //document.getElementById("btn").addEventListener("click" , validarformulario)
 
 //function validarformulario(e){
@@ -15,9 +14,9 @@
     //console.log(email,contraseña,productos,cantidad,talla,nombre,apellido,direccion,ciudad)
 //}
 var modificar = (listadonuevo)=>{
+    console.log("bbb")
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    //let eproductos = document.getElementById("flexCheckDefault");
     let epolera = document.getElementById("polera");
     let eshort = document.getElementById("short")
     let ecantidad = document.getElementById("cantidad");
@@ -29,9 +28,18 @@ var modificar = (listadonuevo)=>{
     let eBtnEditarUp = document.getElementById('btnEditar')
     let email = eemail.value;
     let contrasena = econtrasena.value;
-    //let productos = eproductos.value;
     let polera= epolera.checked
     let short= eshort.checked
+   
+    var productos = []
+    if (polera==true){
+        productos.push("polera")
+    }
+    if(short==true){
+      
+      productos.push("short")
+    }
+    console.log("aaaa")
     let cantidad = ecantidad.value;
     let talla = etalla.value;
     let nombre = enombre.value;
@@ -40,10 +48,11 @@ var modificar = (listadonuevo)=>{
     let ciudad = eciudad.value;
     let indice = eBtnEditarUp.value;
     listadonuevo[indice].email =email;
-    listadonuevo[indice].contrasena =contrasena;
-    //listadonuevo[indice].productos =productos;
-    listadonuevo[indice].polera = polera
-    listadonuevo[indice].short = short
+    listadonuevo[indice].contrasena =contrasena; 
+    listadonuevo[indice].producto = productos
+    //listadonuevo[indice].polera = polera;
+    //listadonuevo[indice].short = short;
+
     listadonuevo[indice].cantidad =cantidad;
     listadonuevo[indice].talla =talla;
     listadonuevo[indice].nombre =nombre;
@@ -52,9 +61,7 @@ var modificar = (listadonuevo)=>{
     listadonuevo[indice].ciudad =ciudad;
     localStorage.setItem('personas',JSON.stringify(listadonuevo));
     cargarTabla(listadonuevo)
-
 }
-
 var eliminar = (listadonuevo)=>{
     let eBtnEliminarUp = document.getElementById('btnEliminar');
     let indice = eBtnEliminarUp.value;
@@ -78,7 +85,6 @@ var cargarTabla=(listadonuevo)=>{
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
     let eciudad = document.getElementById("ciudad");
-
     render= "<table>"
     render+= "<tr>"
     render+= "<th>email</th>"
@@ -93,7 +99,6 @@ var cargarTabla=(listadonuevo)=>{
     render+= "<th>ciudad</th>"
     render+= "<th>accion</th>"
     render+= "</tr>"
-
     for (let i = 0; i <listadonuevo.length; i++) {
         const element = listadonuevo[i];
         render+="<tr>"
@@ -123,8 +128,21 @@ var cargarTabla=(listadonuevo)=>{
             eemail.value=element.email;
             econtrasena.value=element.contrasena;
             //eproductos.value=element.productos;
-            epolera.checked = element.polera
-            eshort.checked = element.short
+           // epolera.checked = element.polera
+           let productoPolera = element.producto.find(e=>e=="polera");
+           let productoShort = element.producto.find(e=>e=="short");
+            if(productoPolera && productoShort){
+                epolera.checked = true
+                eshort.checked = true
+            }else if(productoPolera){
+                epolera.checked = true
+                eshort.checked = false
+            }
+            else if(productoShort){
+                epolera.checked = false
+                eshort.checked = true
+            }
+            //eshort.checked = element.short
             ecantidad.value=element.cantidad;
             etalla.value=element.talla;
             enombre.value=element.nombre;
@@ -137,7 +155,6 @@ var cargarTabla=(listadonuevo)=>{
             contenedorBoton.innerHTML = sEditar;
             let eBtnEditarUp = document.getElementById('btnEditar');
             eBtnEditarUp.addEventListener('click',()=>modificar(listadonuevo))
-
         })
         eBTN2.addEventListener("click",()=>{
             eemail.value=element.email;
@@ -152,7 +169,6 @@ var cargarTabla=(listadonuevo)=>{
             edireccion.value=element.direccion;
             eciudad.value=element.ciudad;
             let sEliminar = "<button type='button' id='btnEliminar' value='"+i+"'>Eliminar</button>";
-
             let contenedorBoton = document.getElementById('contenedorBtnExtra');
             contenedorBoton.innerHTML = sEliminar;
             let eBtnEliminarUp = document.getElementById('btnEliminar');
@@ -183,14 +199,13 @@ var registrar = ()=>{
     let apellido = eapellido.value;
     let direccion = edireccion.value;
     let ciudad = eciudad.value;
-
-    var producto = ""
-    
+    var producto = []
       if (polera==true){
-          producto= "polera"
+          producto.push("polera")
       }
-      else if(short==true){
-          producto = "short"
+      if(short==true){
+        
+        producto.push("short")
       }
       //else{producto = "polera,short"}
 
@@ -222,7 +237,6 @@ var registrar = ()=>{
     //tabla
     cargarTabla(listadonuevo)
    }
-
 var cragarDatos = ()=>{
     let listadoPersonas = localStorage.getItem("personas");
     let listadoAntiguo = JSON.parse(listadoPersonas);
@@ -286,5 +300,3 @@ addEventListener('load',cragarDatos)
 //}
 
    // document.getElementById("btn").addEventListener("click" , registrar)
-
-
