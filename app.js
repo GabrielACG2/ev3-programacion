@@ -17,7 +17,9 @@
 var modificar = (listadonuevo)=>{
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    let eproductos = document.getElementById("flexCheckDefault");
+    //let eproductos = document.getElementById("flexCheckDefault");
+    let epolera = document.getElementById("polera");
+    let eshort = document.getElementById("short")
     let ecantidad = document.getElementById("cantidad");
     let etalla = document.getElementById("talla");
     let enombre = document.getElementById("nombre");
@@ -27,7 +29,9 @@ var modificar = (listadonuevo)=>{
     let eBtnEditarUp = document.getElementById('btnEditar')
     let email = eemail.value;
     let contrasena = econtrasena.value;
-    let productos = eproductos.value;
+    //let productos = eproductos.value;
+    let polera= epolera.checked
+    let short= eshort.checked
     let cantidad = ecantidad.value;
     let talla = etalla.value;
     let nombre = enombre.value;
@@ -37,7 +41,9 @@ var modificar = (listadonuevo)=>{
     let indice = eBtnEditarUp.value;
     listadonuevo[indice].email =email;
     listadonuevo[indice].contrasena =contrasena;
-    listadonuevo[indice].productos =productos;
+    //listadonuevo[indice].productos =productos;
+    listadonuevo[indice].polera = polera
+    listadonuevo[indice].short = short
     listadonuevo[indice].cantidad =cantidad;
     listadonuevo[indice].talla =talla;
     listadonuevo[indice].nombre =nombre;
@@ -61,7 +67,9 @@ var cargarTabla=(listadonuevo)=>{
     let econtenedorTabla = document.getElementById("contenedorTabla");
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    let eproductos = document.getElementById("flexCheckDefault");
+    //let eproductos = document.getElementById("flexCheckDefault");
+    let epolera = document.getElementById("polera")
+    let eshort = document.getElementById("short")
     let ecantidad = document.getElementById("cantidad");
     let etalla = document.getElementById("talla");
     let enombre = document.getElementById("nombre");
@@ -73,7 +81,8 @@ var cargarTabla=(listadonuevo)=>{
     render+= "<tr>"
     render+= "<th>email</th>"
     render+= "<th>contrasena</th>"
-    render+= "<th>productos</th>"
+    //render+= "<th>productos</th>"
+    render+= "<th>producto</th>"
     render+= "<th>cantidad</th>"
     render+= "<th>talla</th>"
     render+= "<th>nombre</th>"
@@ -88,7 +97,8 @@ var cargarTabla=(listadonuevo)=>{
         render+="<tr>"
         render+="<td>"+element.email+"</td>"
         render+="<td>"+element.contrasena+"</td>"
-        render+="<td>"+element.productos+"</td>"
+        //render+="<td>"+element.productos+"</td>"
+        render+="<td>"+element.producto+"</td>"
         render+="<td>"+element.cantidad+"</td>"
         render+="<td>"+element.talla+"</td>"
         render+="<td>"+element.nombre+"</td>"
@@ -110,7 +120,9 @@ var cargarTabla=(listadonuevo)=>{
         eBTN.addEventListener("click",()=>{
             eemail.value=element.email;
             econtrasena.value=element.contrasena;
-            eproductos.value=element.productos;
+            //eproductos.value=element.productos;
+            epolera.checked = element.polera
+            eshort.checked = element.short
             ecantidad.value=element.cantidad;
             etalla.value=element.talla;
             enombre.value=element.nombre;
@@ -128,11 +140,13 @@ var cargarTabla=(listadonuevo)=>{
         eBTN2.addEventListener("click",()=>{
             eemail.value=element.email;
             econtrasena.value=element.contrasena;
-            eproductos.value=element.productos;
+            //eproductos.value=element.productos;
+            epolera.checked = element.polera
+            eshort.checked = element.short
             ecantidad.value=element.cantidad;
             etalla.value=element.talla;
             enombre.value=element.nombre;
-            eapeliido.value=element.apellido;
+            eapellido.value=element.apellido;
             edireccion.value=element.direccion;
             eciudad.value=element.ciudad;
             let sEliminar = "<button type='button' id='btnEliminar' value='"+i+"'>Eliminar</button>";
@@ -147,39 +161,55 @@ var cargarTabla=(listadonuevo)=>{
 var registrar = ()=>{
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    let eproductos = document.getElementById("flexCheckDefault");
+    //let eproductos = document.getElementById("flexCheckDefault");
     let ecantidad = document.getElementById("cantidad");
     let etalla = document.getElementById("talla");
     let enombre = document.getElementById("nombre");
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
     let eciudad = document.getElementById("ciudad");
+    let epolera = document.getElementById("polera")
+    let eshort = document.getElementById("short")
+    let polera = epolera.checked;
+    let short = eshort.checked;
     let email = eemail.value;
     let contrasena = econtrasena.value;
-    let productos = eproductos.value;
+   // let productos = eproductos.value;
     let cantidad = ecantidad.value;
     let talla = etalla.value;
     let nombre = enombre.value;
     let apellido = eapellido.value;
     let direccion = edireccion.value;
     let ciudad = eciudad.value;
-    console.log(email)
-    console.log(contrasena)
-    console.log(productos)
-    console.log(cantidad)
-    console.log(talla)
-    console.log(nombre)
-    console.log(apellido)
-    console.log(direccion)
-    console.log(ciudad)
+
+    var producto = ""
+    
+      if (polera==true){
+          producto= "polera"
+      }
+      else if(short==true){
+          producto = "short"
+      }
+      //else{producto = "polera,short"}
+
+
+    //console.log(email)
+    //console.log(contrasena)
+    //console.log(productos)
+    //console.log(cantidad)
+    //console.log(talla)
+    //console.log(nombre)
+    //console.log(apellido)
+    //console.log(direccion)
+    //console.log(ciudad)
     let listadoPersonas = localStorage.getItem("personas");
     let listadoAntiguo = JSON.parse(listadoPersonas);
     if(listadoAntiguo==null){
-        let persona = {"id": 0,"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        let persona = {"id": 0,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
         listadonuevo = [persona]
     }else{
         //listadoAntiguo.push(persona)
-        let persona = {"id": listadoAntiguo.length,"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        let persona = {"id": listadoAntiguo.length,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
         listadonuevo = [...listadoAntiguo,persona]
     }
     //console.log(persona)
