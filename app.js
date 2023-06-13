@@ -54,11 +54,13 @@ var modificar = (listadonuevo)=>{
     cargarTabla(listadonuevo)
 
 }
+
 var eliminar = (listadonuevo)=>{
     let eBtnEliminarUp = document.getElementById('btnEliminar');
     let indice = eBtnEliminarUp.value;
     console.log(listadonuevo)
     lista = listadonuevo.filter((p)=>p.id!=indice)
+    lista = lista.map((p,index)=>{return {...p,'id':index}})//acorta el codigo
     console.log(lista)
     localStorage.setItem('personas',JSON.stringify(lista));
     cargarTabla(lista)
@@ -220,7 +222,15 @@ var registrar = ()=>{
     //tabla
     cargarTabla(listadonuevo)
    }
+
+var cragarDatos = ()=>{
+    let listadoPersonas = localStorage.getItem("personas");
+    let listadoAntiguo = JSON.parse(listadoPersonas);
+    console.log("ya crago todo")
+    cargarTabla(listadoAntiguo)
+}
 document.getElementById("btn").addEventListener("click",registrar);
+addEventListener('load',cragarDatos)
     //let persona ={"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
     //let listado=localStorage.getItem("pers  onas");
     //let listadoantiguo= JSON.parse(listado);
