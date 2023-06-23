@@ -293,7 +293,7 @@ var cragarDatos = ()=>{
         }
     
     }
-    
+
     document.getElementById('btnContraste').addEventListener('click',contraste);
     document.getElementById("btnFuente").addEventListener('click',fuente);
 }
