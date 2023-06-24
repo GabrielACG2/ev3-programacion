@@ -1,20 +1,7 @@
-//document.getElementById("btn").addEventListener("click" , validarformulario)
 
-//function validarformulario(e){
-   // const email= document.getElementById("email").value
-    //const contraseña= document.getElementById("contraseña").value
-    //const productos= document.getElementById("flexCheckDefault").checked
-    //const cantidad= document.getElementById("cantidad").value
-    //const talla= document.getElementById("talla").value
-    //const nombre= document.getElementById("nombre").value
-    //const apellido= document.getElementById("apellido").value
-    //const direccion= document.getElementById("direccion").value
-    //const ciudad= document.getElementById("ciudad").value
-
-    //console.log(email,contraseña,productos,cantidad,talla,nombre,apellido,direccion,ciudad)
-//}
 var modificar = (listadonuevo)=>{
     console.log("bbb")
+    // esto es para obtener los elementos del formulario mediante el id
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
     let epolera = document.getElementById("polera");
@@ -24,12 +11,16 @@ var modificar = (listadonuevo)=>{
     let enombre = document.getElementById("nombre");
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
+    let etelefono = document.getElementById("telefono")
     let eciudad = document.getElementById("ciudad");
     let eBtnEditarUp = document.getElementById('btnEditar')
+
+     // esto es para Obtener los valores de los elementos del formulario
     let email = eemail.value;
     let contrasena = econtrasena.value;
     let polera= epolera.checked
     let short= eshort.checked
+    let telefono=etelefono.value
    
     var productos = []
     if (polera==true){
@@ -47,36 +38,40 @@ var modificar = (listadonuevo)=>{
     let direccion = edireccion.value;
     let ciudad = eciudad.value;
     let indice = eBtnEditarUp.value;
+
+    // esto moodifica el objeto en la lista mediante la modificacion del indice
     listadonuevo[indice].email =email;
     listadonuevo[indice].contrasena =contrasena; 
     listadonuevo[indice].producto = productos
-    //listadonuevo[indice].polera = polera;
-    //listadonuevo[indice].short = short;
-
     listadonuevo[indice].cantidad =cantidad;
     listadonuevo[indice].talla =talla;
     listadonuevo[indice].nombre =nombre;
     listadonuevo[indice].apellido =apellido;
     listadonuevo[indice].direccion =direccion;
     listadonuevo[indice].ciudad =ciudad;
+    listadonuevo[indice].telefono=telefono;
+
+    // esto guarda la lista actualizada en el almacenamiento local
     localStorage.setItem('personas',JSON.stringify(listadonuevo));
+    // esto carga la tabla con los datos actualizados
     cargarTabla(listadonuevo)
 }
 var eliminar = (listadonuevo)=>{
     let eBtnEliminarUp = document.getElementById('btnEliminar');
     let indice = eBtnEliminarUp.value;
-    console.log(listadonuevo)
+    // esto es para filtrar la lista para eliminar el objeto con el índice dado
     lista = listadonuevo.filter((p)=>p.id!=indice)
+    // esto actualiza los índices de los elementos restantes en la lista
     lista = lista.map((p,index)=>{return {...p,'id':index}})//acorta el codigo
-    console.log(lista)
+    // esto es para guardar la lista actualizada en el almacenamiento local
     localStorage.setItem('personas',JSON.stringify(lista));
+    // esto carga la tabla con los datos actualizados
     cargarTabla(lista)
 }
 var cargarTabla=(listadonuevo)=>{
     let econtenedorTabla = document.getElementById("contenedorTabla");
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    //let eproductos = document.getElementById("flexCheckDefault");
     let epolera = document.getElementById("polera")
     let eshort = document.getElementById("short")
     let ecantidad = document.getElementById("cantidad");
@@ -84,33 +79,36 @@ var cargarTabla=(listadonuevo)=>{
     let enombre = document.getElementById("nombre");
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
+    let etelefono = document.getElementById("telefono")
     let eciudad = document.getElementById("ciudad");
+    // esto es para crear la estructura de la tabla que se mostrara en pantalla
     render= "<table>"
     render+= "<tr>"
     render+= "<th>email</th>"
     render+= "<th>contrasena</th>"
-    //render+= "<th>productos</th>"
     render+= "<th>producto</th>"
     render+= "<th>cantidad</th>"
     render+= "<th>talla</th>"
     render+= "<th>nombre</th>"
     render+= "<th>apellido</th>"
     render+= "<th>direccion</th>"
+    render+= "<th>telefono</th>"
     render+= "<th>ciudad</th>"
     render+= "<th>accion</th>"
     render+= "</tr>"
+    // esto agrega filas a la tabla con los datos de cada elemento
     for (let i = 0; i <listadonuevo.length; i++) {
         const element = listadonuevo[i];
         render+="<tr>"
         render+="<td>"+element.email+"</td>"
         render+="<td>"+element.contrasena+"</td>"
-        //render+="<td>"+element.productos+"</td>"
         render+="<td>"+element.producto+"</td>"
         render+="<td>"+element.cantidad+"</td>"
         render+="<td>"+element.talla+"</td>"
         render+="<td>"+element.nombre+"</td>"
         render+="<td>"+element.apellido+"</td>"
         render+="<td>"+element.direccion+"</td>"
+        render+="<td>"+element.telefono+"</td>"
         render+="<td>"+element.ciudad+"</td>"
         render+="<td>"
         render+="<button id= 'btnEditar"+i+"'>editar</button>"
@@ -120,15 +118,16 @@ var cargarTabla=(listadonuevo)=>{
     }
     render+="</table>"
     econtenedorTabla.innerHTML = render;
+    // esto agrega eventos a los botones de editar y eliminar de cada fila de la tabla
     for (let i = 0; i < listadonuevo.length; i++) {
         var eBTN = document.getElementById("btnEditar"+i);
         var eBTN2 = document.getElementById("btnEliminar"+i);
         let element= listadonuevo[i]
+        // esto crea un evento para el botón de editar
         eBTN.addEventListener("click",()=>{
+            // esto carga los valores de los elementos en los campos de entrada del formulario
             eemail.value=element.email;
             econtrasena.value=element.contrasena;
-            //eproductos.value=element.productos;
-           // epolera.checked = element.polera
            let productoPolera = element.producto.find(e=>e=="polera");
            let productoShort = element.producto.find(e=>e=="short");
             if(productoPolera && productoShort){
@@ -142,24 +141,26 @@ var cargarTabla=(listadonuevo)=>{
                 epolera.checked = false
                 eshort.checked = true
             }
-            //eshort.checked = element.short
             ecantidad.value=element.cantidad;
             etalla.value=element.talla;
             enombre.value=element.nombre;
             eapellido.value=element.apellido;
             edireccion.value=element.direccion;
+            etelefono.value=element.telefono;
             eciudad.value=element.ciudad;
+            // esto lo que hace es crear un botón que va cambiando  si selecciona el boton de editar en la tabla
             let sEditar = "<button type='button' id='btnEditar' value='"+i+"'>Editar</button>";
-
             let contenedorBoton = document.getElementById('contenedorBtnExtra');
             contenedorBoton.innerHTML = sEditar;
+             // esto lo que hace es crear un botón que va cambiando  si selecciona el boton de editar en la tabla
             let eBtnEditarUp = document.getElementById('btnEditar');
             eBtnEditarUp.addEventListener('click',()=>modificar(listadonuevo))
         })
+        // esto crea un evento para el botón de eliminar
         eBTN2.addEventListener("click",()=>{
+            // esto carga los valores de los elementos en los campos de entrada del formulario
             eemail.value=element.email;
             econtrasena.value=element.contrasena;
-            //eproductos.value=element.productos;
             epolera.checked = element.polera
             eshort.checked = element.short
             ecantidad.value=element.cantidad;
@@ -167,24 +168,28 @@ var cargarTabla=(listadonuevo)=>{
             enombre.value=element.nombre;
             eapellido.value=element.apellido;
             edireccion.value=element.direccion;
+            etelefono.value=element.telefono;
             eciudad.value=element.ciudad;
+            // esto lo que hace es crear un botón que va cambiando  si selecciona el boton de eliminar  en la tabla
             let sEliminar = "<button type='button' id='btnEliminar' value='"+i+"'>Eliminar</button>";
             let contenedorBoton = document.getElementById('contenedorBtnExtra');
             contenedorBoton.innerHTML = sEliminar;
+             // esto lo que hace es crear un botón que va cambiando  si selecciona el boton de eliminar en la tabla
             let eBtnEliminarUp = document.getElementById('btnEliminar');
             eBtnEliminarUp.addEventListener('click',()=>eliminar(listadonuevo))
         })
     }
 }
 var registrar = ()=>{
+    //esto obtiene los valores de los campos de entrada del formulario
     let eemail = document.getElementById("email");
     let econtrasena = document.getElementById("contrasena");
-    //let eproductos = document.getElementById("flexCheckDefault");
     let ecantidad = document.getElementById("cantidad");
     let etalla = document.getElementById("talla");
     let enombre = document.getElementById("nombre");
     let eapellido = document.getElementById("apellido");
     let edireccion = document.getElementById("direccion");
+    let etelefono = document.getElementById("telefono")
     let eciudad = document.getElementById("ciudad");
     let epolera = document.getElementById("polera")
     let eshort = document.getElementById("short")
@@ -192,14 +197,15 @@ var registrar = ()=>{
     let short = eshort.checked;
     let email = eemail.value;
     let contrasena = econtrasena.value;
-   // let productos = eproductos.value;
     let cantidad = ecantidad.value;
     let talla = etalla.value;
     let nombre = enombre.value;
     let apellido = eapellido.value;
     let direccion = edireccion.value;
+    let telefono=etelefono.value
     let ciudad = eciudad.value;
     var producto = []
+    // esto verifica qué productos están seleccionados para cragarlos en la tabla mediante un if para los checkbox
       if (polera==true){
           producto.push("polera")
       }
@@ -207,44 +213,34 @@ var registrar = ()=>{
         
         producto.push("short")
       }
-      //else{producto = "polera,short"}
-
-
-    //console.log(email)
-    //console.log(contrasena)
-    //console.log(productos)
-    //console.log(cantidad)
-    //console.log(talla)
-    //console.log(nombre)
-    //console.log(apellido)
-    //console.log(direccion)
-    //console.log(ciudad)
+      // esto obtiene el listado de personas del almacenamiento local
     let listadoPersonas = localStorage.getItem("personas");
     let listadoAntiguo = JSON.parse(listadoPersonas);
+    // esto crea un nuevo objeto persona
     if(listadoAntiguo==null){
-        let persona = {"id": 0,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        let persona = {"id": 0,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"telefono":telefono,"ciudad":ciudad}
         listadonuevo = [persona]
+    // esto verifica si el listado antiguo existe o es nulo
     }else{
-        //listadoAntiguo.push(persona)
-        let persona = {"id": listadoAntiguo.length,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
+        let persona = {"id": listadoAntiguo.length,"email":email,"contrasena":contrasena,"producto":producto,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"telefono":telefono,"ciudad":ciudad}
         listadonuevo = [...listadoAntiguo,persona]
     }
-    //console.log(persona)
     console.log(listadoAntiguo)
     console.log(listadonuevo);
+     // esto guarda el nuevo listado en el almacenamiento local
     localStorage.setItem("personas",JSON.stringify(listadonuevo));
-    //eContenedorTabla.innerHTML = ""+listadoNuevo.length;
-    //tabla
+    // esto carga la tabla con el nuevo listado
     cargarTabla(listadonuevo)
    }
 var cragarDatos = ()=>{
+     // esto obtiene el listado de personas del almacenamiento local
     let listadoPersonas = localStorage.getItem("personas");
     let listadoAntiguo = JSON.parse(listadoPersonas);
     console.log("ya cargo todo")
     cargarTabla(listadoAntiguo)
 
 
-
+// esto es una funcion para cambiar el contraste
     var contraste =()=>{
         let btn = document.getElementById('btnContraste');
         if(btn.value == '0'){
@@ -260,6 +256,7 @@ var cragarDatos = ()=>{
             btn.value = '0';
         }
     }
+    // esto es una función para cambiar el tamaño de la fuente
     var fuente = ()=>{
         let btn = document.getElementById("btnFuente");
         if(btn.value == '0'){
@@ -293,64 +290,12 @@ var cragarDatos = ()=>{
         }
     
     }
-
     document.getElementById('btnContraste').addEventListener('click',contraste);
     document.getElementById("btnFuente").addEventListener('click',fuente);
+
+   
 }
+// esto agrega eventos a los botones
 document.getElementById("btn").addEventListener("click",registrar);
 addEventListener('load',cragarDatos)
-    //let persona ={"email":email,"contrasena":contrasena,"productos":productos,"cantidad":cantidad,"talla":talla,"nombre":nombre,"apellido":apellido,"direccion":direccion,"ciudad":ciudad}
-    //let listado=localStorage.getItem("pers  onas");
-    //let listadoantiguo= JSON.parse(listado);
-    //if(listadoantiguo==null){
-        //listadonuevo =[persona]
-    //}else{
-        //listadoantiguo.push(persona)
-        //listadonuevo =[...listadoantiguo,persona]
-    //}
-    //console.log(persona)
-    //console.log(listadoantiguo)
-    //console.log(listadonuevo)
-    //localStorage.setItem("personas",JSON.stringify(listadonuevo));
-    
-    //render= "<table>"
-    //render+= "<tr>"
-    //render+= "<th>email</th>"
-    //render+= "<th>contrasena</th>"
-    //render+= "<th>productos</th>"
-    //render+= "<th>cantidad</th>"
-    //render+= "<th>talla</th>"
-    //render+= "<th>nombre</th>"
-    //render+= "<th>apellido</th>"
-   // render+= "<th>direccion</th>"
-    //render+= "<th>ciudad</th>"
-    //render+= "</tr>"
 
-    //for (let i = 0; i <listadonuevo.length; i++) {
-        //const element = listadonuevo[i];
-        //render+="<tr>"
-        //render+="<td>"+element.email+"</td>"
-        //render+="<td>"+element.contrasena+"</td>"
-        //render+="<td>"+element.productos+"</td>"
-        //render+="<td>"+element.cantidad+"</td>"
-        //render+="<td>"+element.talla+"</td>"
-        //render+="<td>"+element.nombre+"</td>"
-        //render+="<td>"+element.apellido+"</td>"
-        //render+="<td>"+element.direccion+"</td>"
-        //render+="<td>"+element.ciudad+"</td>"
-        //render+="<td>"
-        //render+="<button id= 'btneditar"+i+"'>editar</button>"
-        //render+="<button id= 'btneliminar"+i+"'>eliminar</button>"
-        //render+="</td>"
-        //render+="</tr>"
-    //}
-    //render+="</table>"
-    //econtenedorTabla.innerHTML = render;
-    //for (let i = 0; i < listadonuevo.length; i++) {
-        //var eBTN = document.getElementById("btneditar"+i);
-        //let element= listadonuevo[i]
-        //eBTN.addEventListener("click",()=>{alert("hola"+element.email+" "+element.contrasena+" "+element.productos+" "+element.cantidad+" "+element.talla+" "+element.nombre+" "+element.apellido+" "+element.direccion+" "+element.ciudad)})
-    //}
-//}
-
-   // document.getElementById("btn").addEventListener("click" , registrar)
